@@ -1,0 +1,5 @@
+/node_modules/
+/public/build/
+/public/service-worker.js
+/package-lock.json
+/.vscode
