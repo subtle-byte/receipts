@@ -8,7 +8,7 @@
         {stacked: MainScreen, component_props: {}},
     ];
     set_app_context({
-        push_stacked(stacked: typeof SvelteComponent, component_props: object) {
+        push_stacked(stacked, component_props) {
             stackeds.push({stacked, component_props}); stackeds = stackeds;
             history.pushState(null, '', '');
         },

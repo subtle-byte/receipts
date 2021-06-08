@@ -1,13 +1,15 @@
 import {SvelteComponent, getContext, setContext} from 'svelte';
 
-type ComponentConstructor<P> = {
-    new (options: {props?: P}): any,
-};
+type ComponentConstructorOptions<C extends typeof SvelteComponent> =
+    ConstructorParameters<C> extends [options: infer O] ? O : never;
+
+type ComponentProps<C extends typeof SvelteComponent> =
+    ComponentConstructorOptions<C> extends {props?: infer P} ? P : never;
 
 const key = {};
 export type AppContext = {
-    push_stacked<P>(stacked: typeof SvelteComponent & ComponentConstructor<P>, component_props: object & P),
-    pop_stacked(),
+    push_stacked<C extends typeof SvelteComponent>(stacked: C, component_props: object & ComponentProps<C>): void,
+    pop_stacked(): void,
 };
 export function set_app_context(app_context: AppContext) {
     setContext(key, app_context);

@@ -12,7 +12,7 @@ export function is_empty<I, V>(it: HasSome<I, V>): boolean {
     return !it.some(_ => true);
 }
 
-export type SparseArray<K extends number, T> = {[id: number]: T} & HasForEach<number, T> & HasSome<number, T>;
+export type SparseArray<_ extends number, T> = {[id: number]: T} & HasForEach<number, T> & HasSome<number, T>;
 
 export function get_values<I, V>(collection: HasForEach<I, V>): V[] {
     let values: V[] = [];

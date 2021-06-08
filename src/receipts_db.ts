@@ -29,7 +29,8 @@ open_request.onupgradeneeded = event => {
 
     switch (event.oldVersion) {
         case 0: {
-            let receipts = db.createObjectStore('receipts', {autoIncrement: true});
+            // let receipts =
+            db.createObjectStore('receipts', {autoIncrement: true});
             // receipts.createIndex('months_index', ['year', 'month']);
         }
         case 1: {
@@ -53,7 +54,7 @@ open_request.onupgradeneeded = event => {
         }
     }
 };
-open_request.onblocked = event => {
+open_request.onblocked = () => {
     alert('Database is blocked - a bug.');
 };
 open_request.onsuccess = () => {
@@ -117,7 +118,7 @@ export function add_receipt(plain_receipt: PlainReceipt, callback: (id: ReceiptI
         request.onerror = console.error;
     });
 }
-export function delete_receipt(receipt_id) {
+export function delete_receipt(receipt_id: ReceiptId) {
     schedule_task(db => {
         let transaction = db.transaction('receipts', 'readwrite');
         let receipts = transaction.objectStore('receipts');
