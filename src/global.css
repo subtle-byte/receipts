@@ -16,6 +16,8 @@
 	background-color: transparent;
 
 	cursor: inherit;
+
+	flex-shrink: 0;
 }
 
 html {

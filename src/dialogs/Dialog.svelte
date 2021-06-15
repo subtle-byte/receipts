@@ -63,5 +63,6 @@
         display: flex;
         flex-direction: column;
         overflow: auto;
+        flex-shrink: 1;
     }
 </style>
