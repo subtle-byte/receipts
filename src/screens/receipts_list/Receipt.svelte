@@ -1,5 +1,5 @@
 <script lang='ts'>
-    import type {Receipt, ReceiptId} from '../../stores/receipts';
+    import type {Receipt, ReceiptId, Money} from '../../stores/receipts';
     import receipts from '../../stores/receipts';
     import {get_app_context} from '../../app_context';
     import ReceiptEditor from '../ReceiptEditor.svelte';
@@ -10,6 +10,7 @@
 
     export let receipt_id: ReceiptId;
     export let receipt: Receipt;
+    export let max_category_price: Money;
     $: items = get_items_merged_by_categories_store(receipt.items);
 
     let {push_stacked} = get_app_context();
@@ -25,7 +26,7 @@
 >
     <div class='wrapper'>
         {#if $items.length}
-            <StatisticsByCategories statistics={$items} />
+            <StatisticsByCategories statistics={$items} max_price={max_category_price} />
         {:else}
             <div class='empty'>Empty receipt</div>
         {/if}

@@ -1,9 +1,11 @@
 <script lang='ts'>
     import type {DayGroup} from '../../stores/receipts_by_months';
     import Receipt from './Receipt.svelte';
+    import type {Money} from 'src/stores/receipts';
 
     export let day: number;
     export let day_group: DayGroup;
+    export let max_category_price: Money;
 </script>
 
 <div class='day_group'>
@@ -11,7 +13,7 @@
     <div class='receipts'>
         {#each Object.entries(day_group).reverse() as [receipt_id, receipt] (receipt_id)}
             <!-- <div transition:slide|local animate:flip> -->
-                <Receipt receipt_id={parseInt(receipt_id)} {receipt} />
+                <Receipt receipt_id={parseInt(receipt_id)} {receipt} {max_category_price} />
             <!-- </div> -->
         {/each}
     </div>

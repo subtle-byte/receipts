@@ -8,7 +8,8 @@ import {get_items_merged_by_categories_store} from './items_merged_by_categories
 
 export type MonthStatistics = {
     price: Money,
-    by_categories: Map<CategoryId, Money>;
+    by_categories: Map<CategoryId, Money>,
+    max_category_price: Money,
 };
 function update_statistics(statistics: MonthStatistics, items: Item[], factor: 1 | -1) {
     for (let {category_id, price} of items) {
@@ -16,9 +17,12 @@ function update_statistics(statistics: MonthStatistics, items: Item[], factor: 1
         statistics.by_categories.set(category_id, category_price);
         statistics.price += factor * price;
     }
+    statistics.max_category_price = 0;
     for (let [category, price] of statistics.by_categories) {
         if (price === 0)
             statistics.by_categories.delete(category);
+        else if (statistics.max_category_price < price)
+            statistics.max_category_price = price;
     }
 }
 
@@ -33,6 +37,7 @@ export function get_month_statistics_store(month_store: MonthGroupStore): Readab
         let statistics: MonthStatistics = {
             price: 0,
             by_categories: new Map(),
+            max_category_price: 0,
         };
         set(statistics);
 

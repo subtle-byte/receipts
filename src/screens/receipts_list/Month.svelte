@@ -33,7 +33,7 @@
         <div class='days' transition:slide|local>
             {#each Object.entries($month_store).reverse() as [day, day_group] (day)}
                 <!-- <div transition:slide|local animate:flip> -->
-                    <Day day={parseInt(day)} {day_group} />
+                    <Day day={parseInt(day)} {day_group} max_category_price={$month_statistics_store.max_category_price} />
                 <!-- </div> -->
             {/each}
         </div>

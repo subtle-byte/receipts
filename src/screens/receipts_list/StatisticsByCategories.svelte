@@ -4,11 +4,11 @@
     import type {CategoryId} from '../../stores/categories';
     import type {Money} from '../../stores/receipts';
 
+    export let max_price: undefined | number = undefined;
     export let statistics: {category_id: CategoryId, price: Money}[];
-    $: sorted_statistics = statistics.sort((a, b) => b.price - a.price);
 
-    $: max_price = statistics.map(({price}) => price).reduce((a, b) => Math.max(a, b), 0);
-    
+    $: sorted_statistics = statistics.sort((a, b) => b.price - a.price);
+    $: max_price_defined = max_price ?? statistics.map(({price}) => price).reduce((a, b) => Math.max(a, b), 0);
 </script>
 
 <div class='root'>
@@ -18,7 +18,7 @@
                 <CategoryLabel name={$categories.by_id.get(category_id)?.name} />
             </div>
             <div class='indicator'>
-                <div class='line' style={`width:${price / max_price * 100}%`} />
+                <div class='line' style={`width:${price / max_price_defined * 100}%`} />
             </div>
             <div class='price'>{price}</div>
         </div>
